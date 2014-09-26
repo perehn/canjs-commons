@@ -1,6 +1,6 @@
 define(['jquery',
         'can'],
-        function(jQuery, can){
+        function($, can){
 
 	can.Control.prototype.find = function(s){
 		return this.element.find(s);  
@@ -25,7 +25,7 @@ define(['jquery',
 
 
 
-	jQuery.fn.model = function(m){
+	$.fn.model = function(m){
 		if(m){
 
 			this.data('model', m);
@@ -38,7 +38,7 @@ define(['jquery',
 	};
 
 
-	jQuery.Event.prototype.stop = function(){
+	$.Event.prototype.stop = function(){
 		this.stopPropagation();
 		this.preventDefault();
 	};
