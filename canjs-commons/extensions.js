@@ -6,7 +6,7 @@ define(['jquery',
 		return this.element.find(s);  
 	};
 
-	can.Model.List.prototype.getOne = function(id){
+	can.Model.List.prototype.findById = function(id){
 		return this.filter(function(element){
 			return element.id == id;
 		})[0];
