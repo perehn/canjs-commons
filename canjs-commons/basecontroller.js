@@ -92,32 +92,7 @@ function(can, Functions, $) {
 
 });
 	
-	function dfdMap(data){
-    	var dfdMap = $.Deferred();
-    	var deffereds_array = [];
-    	var keys_array = [];
-    	$.map(data, function(dfd, key) {
-    		deffereds_array.push(dfd);
-    		keys_array.push(key);
-    	});
-    	$.when.apply(null, deffereds_array).done(function(){
-    		var args = arguments;
-    		var result = {};
-    		$.each(args, function(i,e){
-    			
-    			var key = keys_array[i];
-    			if(key){
-    				result[key] = e;
-    			}
-    		});
-    		
-    		dfdMap.resolve(result);
-    	}).fail(function(a,b,c){
-    		dfdMap.reject();
-    	});
 
-		return dfdMap;
-    };
 });
 
 
