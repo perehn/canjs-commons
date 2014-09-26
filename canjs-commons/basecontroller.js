@@ -1,6 +1,6 @@
 
-define(['can/control', 'can/construct/super'],
-function() {
+define(['can', 'canjs-commons/functions', 'jquery', 'can/construct/super'],
+function(can, Functions, $) {
 	
 
 	
@@ -30,7 +30,7 @@ function() {
 		var dataDFD = controller.getData() || {};
 
 
-		$.when(dfdMap(dataDFD)).done(function(data){
+		$.when(Functions.dfdMap(dataDFD)).done(function(data){
 			if(!controller.element){
 				dfd.fail();
 				return;
@@ -85,7 +85,7 @@ function() {
 		if(this.element){
 			this.element.removeClass('controller');
 		}
-		console.log('destroy ' + this.constructor._shortName);
+
 	    this._super();
 
 	}
