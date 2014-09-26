@@ -1,4 +1,9 @@
-
+/**
+ * Modded version of stache:
+ * https://github.com/jfparadis/requirejs-mustache/blob/master/stache.js
+ * 
+ * Uses the built in can/view/mustache instead of external mustache.
+ */
 
 define(['text'], function ( text) {
     'use strict';

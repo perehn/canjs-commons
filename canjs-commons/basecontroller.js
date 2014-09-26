@@ -38,7 +38,7 @@ function(can, Functions, $) {
 
 			can.extend(controller.options, data);
 
-			$.when(controller.preRender(data)).done(function(){
+			$.when(controller.preRender(controller.options)).done(function(){
 
 				
 				dfd.resolve();
@@ -57,7 +57,7 @@ function(can, Functions, $) {
 		
 		element.html(controller.template(controller.options));
 		
-		controller.postRender();
+		controller.postRender(controller.options);
 		element.addClass('controller');
 		element.trigger('rendered');
 		
