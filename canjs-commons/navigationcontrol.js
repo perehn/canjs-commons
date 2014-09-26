@@ -55,7 +55,6 @@ define([
 		 * #!exampleurl - Page.Exampleurl
 		 */
 
-		
 		":page route": function(data) {
 
 			var url = data.page;
@@ -66,10 +65,26 @@ define([
 				return;
 			}
 			
-			this.openPage(PageControllerClass);
+			this.openUrl(data.page);
 
 		},
 		
+		":page/:subpage route": function(data) {
+
+			this.openUrl(data.page, {subpage : data.subpage})
+
+		},
+		
+		
+		openUrl : function(url, pageOptions){
+			var PageControllerClass = this.options.urlControllerMapping[url] || Page[can.capitalize(url)];
+			if(!PageControllerClass){
+				console.error('Could not find page ' + url);
+				return;
+			}
+			
+			this.openPage(PageControllerClass, pageOptions);
+		},
 		
 
 		openPage : function(PageControllerClass, pageOptions ){

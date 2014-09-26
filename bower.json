@@ -1,6 +1,6 @@
 {
     "name": "canjs-commons",
-    "version": "0.0.5",
+    "version": "0.0.6",
     "main": "./canjs-commons.js",
     "dependencies": {
         "jquery": "latest",
