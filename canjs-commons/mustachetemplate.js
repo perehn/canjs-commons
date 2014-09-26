@@ -2,7 +2,7 @@
  * Modded version of stache:
  * https://github.com/jfparadis/requirejs-mustache/blob/master/stache.js
  * 
- * Uses the built in can/view/mustache instead of external mustache.
+ * Modded so can/view/mustache can be used.
  */
 
 define(['text'], function ( text) {
