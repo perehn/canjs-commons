@@ -9,7 +9,6 @@ define([
 	}, {
 		
 		defaults : {
-			defaultPage : 'home',
 			pageContainer : '#page-container',
 			animate : true,
 			preAnimation : function(container){
