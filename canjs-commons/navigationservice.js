@@ -14,7 +14,7 @@ define([
 			preAnimation : function(container){
 				var dfd = can.Deferred();
 				container.animate({
-					opacity: 0.1
+					opacity: 0
 				}, 200, function() {
 					dfd.resolve();
 				});
