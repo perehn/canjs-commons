@@ -4,7 +4,10 @@ define([
 
         ], function(can, $) {
 
-	return can.Control.extend({
+	return can.Construct.extend({
+		
+	}, {
+		
 		defaults : {
 			defaultPage : 'home',
 			pageContainer : '#page-container',
@@ -29,61 +32,16 @@ define([
 			},
 			cleanupAnimation : function(container){
 				container.css({opacity: 1});
-			},
-			urlControllerMapping : {}
-		}
-	}, {
-		init: function(element, options) {
+			}
+			
+		},
+		
+		
+		init: function(options) {
 			var self = this;
-
-
-			can.route(":page/:subpage", {});
-
 			
-			can.route.ready();
-			var page = can.route.attr('page');
-			if (page == null)
-				can.route.attr('page', self.options.defaultPage);
+			this.options = can.extend(this.defaults, options);
 			
-
-		},
-		
-		/**
-		 * Default mapping used
-		 * 
-		 * url -> PageControllerClass
-		 * #!exampleurl - Page.Exampleurl
-		 */
-
-		":page route": function(data) {
-
-			var url = data.page;
-			
-			var PageControllerClass = this.options.urlControllerMapping[url] || Page[can.capitalize(url)];
-			if(!PageControllerClass){
-				console.error('Could not find page ' + url);
-				return;
-			}
-			
-			this.openUrl(data.page);
-
-		},
-		
-		":page/:subpage route": function(data) {
-
-			this.openUrl(data.page, {subpage : data.subpage})
-
-		},
-		
-		
-		openUrl : function(url, pageOptions){
-			var PageControllerClass = this.options.urlControllerMapping[url] || Page[can.capitalize(url)];
-			if(!PageControllerClass){
-				console.error('Could not find page ' + url);
-				return;
-			}
-			
-			this.openPage(PageControllerClass, pageOptions);
 		},
 		
 
