@@ -1,32 +1,27 @@
-define([ 'framework7', 'mtemplate!canjs-commons/fm7-plugin/pagebase.mustache', 'mtemplate!canjs-commons/fm7-plugin/popupnavbar.mustache'], 
-		function(fm7, pagebaseTemplate, pageNavbarTemplate, popupNavbarTemplate){
+define([ 'framework7', 'mtemplate!canjs-commons/fm7-plugin/pagebase.mustache', 
+         'mtemplate!canjs-commons/fm7-plugin/pagenavbar.mustache','mtemplate!canjs-commons/fm7-plugin/popupnavbar.mustache'], 
+		function(fm7, pagebaseTemplate, 
+				pageNavbarTemplate, popupNavbarTemplate){
 
-	
-	var defaultOptions = {
-			
-	}
+
 	Framework7.prototype.plugins.canjsPlugin = function (app, params) {
 		var overrides = {}, hooks = {};
 	
 		app.openPage = function (view, pageConfig){
 
-			var defaultConfig = {animatePages : true, showBackLink : true};
+			var defaults = {animatePages : true, showBackLink : true};
 			
-			var pageConfig = can.extend(defaultConfig, pageConfig);
+			pageConfig = can.extend(defaults, pageConfig);
 			
-			view.pageConfig = pageConfig;
-			
+			view.pageConfig = pageConfig; // pageConfig is needed in the hooks as well, save it temporarly on the view
+			view.url = ""; // let the page be loaded, regardless if it was the previous one loaded.
 		
 		
 			pageConfig.content = pagebaseTemplate.render();
 			pageConfig.element = $('<div class="page-content"></div>');
 			
-			var pageControllerClass = Page[can.capitalize(pageConfig.url)];
-			if(!pageControllerClass){
-				console.log('Could not find controller for ' + pageConfig.url);
-				return;
-			}
-			var controller = new pageControllerClass(pageConfig.element, pageConfig.options); 
+			
+			var controller = new pageConfig.pageController(pageConfig.element, pageConfig.options); 
 			
 			return controller._preRenderPhase().done(function(){
 
@@ -53,9 +48,9 @@ define([ 'framework7', 'mtemplate!canjs-commons/fm7-plugin/pagebase.mustache', '
 				controller.renderNavbar(navbar);
 			}else{
 				var options = {showBackLink : pageConfig.showBackLink};
-				$.extend(options, controller.navbarOptions);
+				can.extend(options, controller.navbarOptions);
 				
-				var navbarTemplate = pageData.navbarTemplate || pageNavbarTemplate;
+				var navbarTemplate = pageConfig.navbarTemplate || pageNavbarTemplate;
 				
 				navbar.html(navbarTemplate(options));
 			}
@@ -75,30 +70,26 @@ define([ 'framework7', 'mtemplate!canjs-commons/fm7-plugin/pagebase.mustache', '
         }
 
 		
-        app.openPopup = function(url, options){
-			var self = this, options = options || {};
-			
-			
-			var view = FM7App.popupView;
-			
-			var pageConfig = {
+        app.openPopup = function(view, pageConfig){
+			var self = this;
+
+			var defaults = {
 				animatePages : false,
 				showBackLink : false,
-				url : url,
-				options : options,
 				navbarTemplate : popupNavbarTemplate
 			}
-			
-			
-			app.openPage(FM7App.popupView, pageConfig).done(function(){
+			pageConfig = can.extend(defaults, pageConfig);
+
+			app.openPage(view, pageConfig).done(function(){
 				self.popup('.popup')
 			})
 			
 		};
         
 		
-		Framework7.$('.popup').on('closed', function(){
-			Framework7.$('.popup .page .page-content').remove();
+		$('.popup').on('closed', function(){
+			$('.popup .navbar').html('');
+			$('.popup .pages').html('');
 		});
 		
 		
