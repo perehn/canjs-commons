@@ -1,12 +1,24 @@
-define([ 'framework7', 'mtemplate!canjs-commons/fm7-plugin/pagebase.mustache', 
+define([ 'framework7', 'jquery', 'mtemplate!canjs-commons/fm7-plugin/pagebase.mustache', 
          'mtemplate!canjs-commons/fm7-plugin/pagenavbar.mustache','mtemplate!canjs-commons/fm7-plugin/popupnavbar.mustache'], 
-		function(fm7, pagebaseTemplate, 
+		function(fm7, $, pagebaseTemplate, 
 				pageNavbarTemplate, popupNavbarTemplate){
 
 
 	Framework7.prototype.plugins.canjsPlugin = function (app, params) {
 		var overrides = {}, hooks = {};
 	
+		/**
+		 * 
+		 * opens a page in the view
+		 * 
+		 * pageConfig:
+		 * - pageController : the controller class, required
+		 * - options : options to the controller, optional
+		 * - navbarTemplate: The template for the navbar. This is optional, if imitted a default template will be used
+		 * - animatePages: defaults to true
+		 * - showBackLink: If default navbar template is used, controls wheather back link should be displayed
+		 * 
+		 */
 		app.openPage = function (view, pageConfig){
 
 			var defaults = {animatePages : true, showBackLink : true};

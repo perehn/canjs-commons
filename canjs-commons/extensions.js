@@ -19,10 +19,16 @@ define(['jquery',
 	can.Model.List.prototype.remove = function(item){
 
 		var index = this.indexOf(item);
+		if(index==-1){
+			return;
+		}
 		this.splice(index, 1);
-		console.log(index);
+		
 	};
 
+	can.Model.List.prototype.grep = function(callback, args){
+		return new this.constructor($.grep(this, callback, args));
+	};
 
 
 	$.fn.model = function(m){
