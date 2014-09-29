@@ -1,5 +1,5 @@
-define([ 'framework7', 'mtemplate!canjs-commons/fm7-plugin/pagebase.mustache', 'mtemplate!canjs-commons/fm7-plugin/pagenavbar.mustache'], 
-		function(fm7, pagebaseTemplate, pagenavbarTemplate){
+define([ 'framework7', 'mtemplate!canjs-commons/fm7-plugin/pagebase.mustache', 'mtemplate!canjs-commons/fm7-plugin/popupnavbar.mustache'], 
+		function(fm7, pagebaseTemplate, pageNavbarTemplate, popupNavbarTemplate){
 
 	
 	var defaultOptions = {
@@ -54,7 +54,10 @@ define([ 'framework7', 'mtemplate!canjs-commons/fm7-plugin/pagebase.mustache', '
 			}else{
 				var options = {showBackLink : pageConfig.showBackLink};
 				$.extend(options, controller.navbarOptions);
-				navbar.html(pagenavbarTemplate(options));
+				
+				var navbarTemplate = pageData.navbarTemplate || pageNavbarTemplate;
+				
+				navbar.html(navbarTemplate(options));
 			}
 			
 			
@@ -82,7 +85,8 @@ define([ 'framework7', 'mtemplate!canjs-commons/fm7-plugin/pagebase.mustache', '
 				animatePages : false,
 				showBackLink : false,
 				url : url,
-				options : options
+				options : options,
+				navbarTemplate : popupNavbarTemplate
 			}
 			
 			
@@ -92,13 +96,9 @@ define([ 'framework7', 'mtemplate!canjs-commons/fm7-plugin/pagebase.mustache', '
 			
 		};
         
-        
-        
 		
-		
-		$('.popup').on('closed', function(){
-			console.log('popup closed');
-			$('.popup .page .page-content').remove();
+		Framework7.$('.popup').on('closed', function(){
+			Framework7.$('.popup .page .page-content').remove();
 		});
 		
 		
