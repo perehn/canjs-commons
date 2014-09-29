@@ -2,13 +2,13 @@ define([ 'framework7', 'mtemplate!canjs-commons/fm7-plugin/pagebase.mustache', '
 		function(fm7, pagebaseTemplate, pagenavbarTemplate){
 
 	
-	
+	var defaultOptions = {
+			
+	}
 	Framework7.prototype.plugins.canjsPlugin = function (app, params) {
 		var overrides = {}, hooks = {};
 	
-		overrides.loadPage = app.loadPage;
-
-		app.loadPage = function (view, pageConfig){
+		app.openPage = function (view, pageConfig){
 
 			var defaultConfig = {animatePages : true, showBackLink : true};
 			
@@ -28,9 +28,9 @@ define([ 'framework7', 'mtemplate!canjs-commons/fm7-plugin/pagebase.mustache', '
 			}
 			var controller = new pageControllerClass(pageConfig.element, pageConfig.options); 
 			
-			controller._preRenderPhase().done(function(){
+			return controller._preRenderPhase().done(function(){
 
-				overrides.loadPage(view, pageConfig);
+				app.loadPage(view, pageConfig);
 									
 			});
 
@@ -48,6 +48,7 @@ define([ 'framework7', 'mtemplate!canjs-commons/fm7-plugin/pagebase.mustache', '
 			var navbar = $(pageData.navbarInnerContainer);
 			
 			
+			controller.navbar = navbar;
 			if(controller.renderNavbar){
 				controller.renderNavbar(navbar);
 			}else{
@@ -69,36 +70,30 @@ define([ 'framework7', 'mtemplate!canjs-commons/fm7-plugin/pagebase.mustache', '
 			var control = el.control();
 			control.destroy();
         }
-        
-		
 
 		
-		
-		app.openPopup = function(url, options){
+        app.openPopup = function(url, options){
 			var self = this, options = options || {};
 			
-			app.popupView.url = '';
 			
-			var pages = $('.popup .pages');
-			pages.html('');
+			var view = FM7App.popupView;
 			
-			pages.append('<div class="page page-on-center"><div class="page-content"></div></div>')
-			var target = $('.popup .page .page-content');
-			
-			
-			
-			var pageController = Page[can.capitalize(url)];
-			if (pageController == null) {
-				console.error(url + ' not found');
-				
-				return;
+			var pageConfig = {
+				animatePages : false,
+				showBackLink : false,
+				url : url,
+				options : options
 			}
-
-			var renderDFD = new pageController(target, options).render();
-			renderDFD.done(function(){
-				self.popup('.popup');
-			});
+			
+			
+			app.openPage(FM7App.popupView, pageConfig).done(function(){
+				self.popup('.popup')
+			})
+			
 		};
+        
+        
+        
 		
 		
 		$('.popup').on('closed', function(){
