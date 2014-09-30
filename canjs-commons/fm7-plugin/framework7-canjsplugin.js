@@ -44,7 +44,6 @@ define([ 'framework7', 'jquery', 'mtemplate!canjs-commons/fm7-plugin/pagebase.mu
 		}
 		
 		hooks.pageBeforeInit = function(pageData){
-        	console.log('pageInit');
         	
         	var $page = $(pageData.container);
 			

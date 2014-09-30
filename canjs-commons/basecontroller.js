@@ -37,7 +37,7 @@ function(can, Functions, $) {
 			}
 
 			can.extend(controller.options, data);
-
+			controller.options = new can.Map(controller.options);
 			$.when(controller.preRender(controller.options)).done(function(){
 
 				
