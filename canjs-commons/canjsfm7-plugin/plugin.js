@@ -1,5 +1,5 @@
-define([ 'framework7', 'jquery', 'mtemplate!canjs-commons/fm7-plugin/pagebase.mustache', 
-         'mtemplate!canjs-commons/fm7-plugin/pagenavbar.mustache','mtemplate!canjs-commons/fm7-plugin/popupnavbar.mustache'], 
+define([ 'framework7', 'jquery', 'mtemplate!canjsfm7-plugin/pagebase.mustache', 
+         'mtemplate!canjsfm7-plugin/pagenavbar.mustache','mtemplate!canjsfm7-plugin/popupnavbar.mustache'], 
 		function(fm7, $, pagebaseTemplate, 
 				pageNavbarTemplate, popupNavbarTemplate){
 
